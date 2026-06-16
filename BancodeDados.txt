@@ -1,0 +1,267 @@
+﻿drop database if exists inteldle;
+CREATE DATABASE inteldle CHARACTER SET utf8mb4;
+USE inteldle;
+
+CREATE TABLE usuarios(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    tipo ENUM('usuario','admin') DEFAULT 'usuario',
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE defeitos(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255),
+    descricao TEXT,
+    imagem VARCHAR(255),
+    tipo ENUM('hardware','software')
+);
+
+CREATE TABLE solucoes(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    defeito_id INT,
+    componente VARCHAR(255),
+    correto BOOLEAN DEFAULT FALSE,
+    mensagem TEXT,
+    FOREIGN KEY(defeito_id) REFERENCES defeitos(id)
+);
+
+CREATE TABLE ranking_diario(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    pontuacao INT DEFAULT 0,
+    data_jogo DATE,
+    FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
+);
+
+CREATE TABLE ranking_infinito(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    pontuacao INT DEFAULT 0,
+    FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
+);
+
+CREATE TABLE historico(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    defeito_id INT,
+    acertou BOOLEAN,
+    pontos INT,
+    data_partida TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+INSERT INTO defeitos
+(titulo,descricao,imagem,tipo)
+VALUES
+
+('Computador não liga',
+'Ao apertar o botão Power do gabinete nada acontece. - O computador não liga - Nenhum LED do gabinete acende.',
+'pc1.png',
+'hardware'),
+
+('Tela Azul',
+'Sistema apresenta BSOD após inicialização.',
+'pc2.png',
+'software'),
+
+('Superaquecimento',
+'Temperatura muito elevada.',
+'pc3.png',
+'hardware'),
+
+('Travamento no sistema operacional',
+'Apos baixar um arquivo de um site duvidoso o computador apresentou travamento.',
+'pc4.png',
+'software'),
+
+('A resolução de video baixa',
+'Apos a luz cair, ao religar o computador a resolução de video se apresentou abaixo da padrao.',
+'pc5.png',
+'software');
+INSERT INTO solucoes
+(defeito_id,componente,correto,mensagem)
+
+VALUES
+
+(1,
+'Fonte',
+1,
+'apos uma verificação minuciosa na Fonte de alimenteção,
+ ela apresentou sintomas de mau funcionamento.
+ Fonte defeituosa substituída.'
+),
+
+(1,'RAM',0,'A memória não era a causa.'),
+
+(1,'GPU',0,'A Placa de video não era a causa.'),
+
+(1,'HD',0,'O Hard disk não era a causa.'),
+
+(1,'SSD',0,'O SSD não era a causa.'),
+
+(1,'Monitor',0,'O Monitor não era a causa.'),
+
+(1,'Limpeza',0,'O Computador não estar limpo, não era a causa.'),
+
+(1,'Placa-Mãe',0,'Boa resposta, a Placa mãe não era a causa, nesse caso'),
+
+(1,'Cooler',0,'O Cooler não era a causa.'),
+
+(1,'BIOS',0,'A BIOS não era a causa.'),
+
+(1,'CMD',0,'A CMD não era a causa.'),
+
+(1,'Atualização',0,'Os Atualização desatualizados não era a causa.'),
+
+(1,'Procurar Vírus',0,'O Computador ter vírus, não era a causa.'),
+
+(1,'CPU',0,'Boa resposta,o CPU não era a causa, nesse caso'),
+
+
+(1,'Reinstalar SO',0,'o SO não era a causa'),
+
+(2,
+'Reinstalar SO',
+1,
+'Arquivos corrompidos corrigidos.'
+),
+
+(2,'RAM',0,'A memória não era a causa.'),
+
+(2,'GPU',0,'A Placa de video não era a causa.'),
+
+(2,'HD',0,'O Hard disk não era a causa.'),
+
+(2,'SSD',0,'O SSD não era a causa.'),
+
+(2,'Monitor',0,'O Monitor não era a causa.'),
+
+(2,'Limpeza',0,'O Computador não estar limpo, não era a causa.'),
+
+(2,'Placa-Mãe',0,'A Placa mãe não era a causa'),
+
+(2,'Cooler',0,'O Cooler não era a causa.'),
+
+(2,'BIOS',0,'A BIOS não era a causa.'),
+
+(2,'CMD',0,'A CMD não era a causa.'),
+
+(2,'Atualização',0,'A Atualização de Drivers estarem desatualizados não era a causa.'),
+
+(2,'Procurar Vírus',0,'O Computador ter vírus, não era a causa.'),
+
+(2,'CPU',0,'O CPU não era a causa'),
+
+(2,'Fonte',0,'A Fonte não era a causa.'),
+
+
+(3,'Fonte',0,'A Fonte não era a causa.'),
+
+(3,'RAM',0,'A memória não era a causa.'),
+
+(3,'GPU',0,'A Placa de video não era a causa.'),
+
+(3,'HD',0,'O Hard disk não era a causa.'),
+
+(3,'SSD',0,'O SSD não era a causa.'),
+
+(3,'Monitor',0,'O Monitor não era a causa.'),
+
+(3,'Limpeza',0,'Boa resposta, o Computador não estar limpo, não era a causa, nesse caso'),
+
+(3,'Placa-Mãe',0,' a Placa mãe não era a causa.'),
+
+(3,'Cooler',1,'Sistema de refrigeração restaurado.'),
+
+(3,'BIOS',0,'A BIOS não era a causa.'),
+
+(3,'CMD',0,'A CMD não era a causa.'),
+
+(3,'Atualização',0,'A Atualização de Drivers estarem desatualizados não era a causa.'),
+
+(3,'Procurar Vírus',0,'O Computador ter vírus, não era a causa.'),
+
+(3,'CPU',0,'o CPU não era a causa.'),
+
+(3,'Reinstalar SO',0,'o SO não era a causa'),
+
+(4,
+'Procurar Vírus',
+1,
+'Sucesso, Você Utilizou um Antivírus e identificou a pressença de um Malware,
+ Vírus neutralizado.'
+),
+
+(4,'RAM',0,'A memória não era a causa.'),
+
+(4,'GPU',0,'A Placa de video não era a causa.'),
+
+(4,'HD',0,'O Hard disk não era a causa.'),
+
+(4,'SSD',0,'O SSD não era a causa.'),
+
+(4,'Monitor',0,'O Monitor não era a causa.'),
+
+(4,'Limpeza',0,'O Computador não estar limpo, não era a causa.'),
+
+(4,'Placa-Mãe',0,' a Placa mãe não era a causa'),
+
+(4,'Cooler',0,'O Cooler não era a causa.'),
+
+(4,'BIOS',0,'A BIOS não era a causa.'),
+
+(4,'CMD',0,'A CMD não era a causa.'),
+
+(4,'Atualização',0,'A Atualização de Drivers estarem desatualizados não era a causa.'),
+
+(4,'Fonte',0,'A Fonte não era a causa.'),
+
+(4,'CPU',0,'o CPU não era a causa'),
+
+(4,'Reinstalar SO',0,'o SO não era a causa'),
+
+(5,
+'Atualização',
+1,
+'apos uma verificação minuciosa foi descoberto que o driver da placa de video corrompeu,
+ causando mau funcionamento,
+ driver defeituoso reinstalado.'
+),
+
+(5,'RAM',0,'A memória não era a causa.'),
+
+(5,'GPU',0,'A Placa de video não era a causa.'),
+
+(5,'HD',0,'O Hard disk não era a causa.'),
+
+(5,'SSD',0,'O SSD não era a causa.'),
+
+(5,'Monitor',0,'Boa resposta,O Monitor não era a causa, nesse caso.'),
+
+(5,'Limpeza',0,'O Computador não estar limpo, não era a causa.'),
+
+(5,'Placa-Mãe',0,' a Placa mãe não era a causa'),
+
+(5,'Cooler',0,'O Cooler não era a causa.'),
+
+(5,'BIOS',0,'A BIOS não era a causa.'),
+
+(5,'CMD',0,'A CMD não era a causa.'),
+
+(5,'Reinstalar SO',0,'A Atualização de Drivers estarem desatualizados não era a causa.'),
+
+(5,'Procurar Vírus',0,'O Computador ter vírus, não era a causa.'),
+
+(5,'Reinstalar SO',0,'o SO não era a causa'),
+
+(5,'CPU',0,'o CPU não era a causa');
+
+
+
+UPDATE usuarios
+SET tipo='admin'
+WHERE id=1;
+SELECT * FROM defeitos ORDER BY id LIMIT 1;
+ALTER TABLE ranking_diario
+ADD CONSTRAINT uq_usuario_data_jogo UNIQUE (usuario_id, data_jogo);

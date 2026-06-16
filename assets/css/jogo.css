@@ -1,0 +1,320 @@
+body {
+  background-color: #2b2b2b;
+  color: #00aaff;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* --- SEÇÃO SUPERIOR --- */
+.topo-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
+  height: 450px;
+  margin-bottom: 50px;
+}
+
+.area-computador {
+  border: 3px solid #00aaff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a1a;
+}
+
+.area-computador img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.caixa-descricao {
+  border: 3px solid #00aaff;
+  padding: 15px;
+  font-size: 14px;
+  overflow-y: auto;
+  line-height: 1.4;
+}
+
+/* --- SEÇÃO DE CONTROLES --- */
+.controles-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 50px;
+}
+
+.secao-botoes-bandejas {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  flex-grow: 1;
+}
+
+.grupo-interativo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+.linha-pecas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px;
+  border: 1px dashed rgba(255, 68, 68, 0.3);
+  position: absolute;
+  left: 110px;
+  background: #2b2b2b;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+}
+
+.linha-pecas.aberta {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Botões */
+.btn-azul {
+  border: 2px solid #00aaff;
+  color: #00aaff;
+  background: none;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 10px;
+  text-transform: uppercase;
+  transition: 0.3s;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.btn-vermelho {
+  border: 2px solid #ff4444;
+  background: #1a1a1a;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  position: relative;
+}
+
+.btn-vermelho img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.btn-azul:hover,
+.btn-vermelho:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.btn-vermelho::after {
+  content: attr(data-nome);
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  color: #00aaff;
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid #00aaff;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s;
+  white-space: nowrap;
+  z-index: 9999;
+}
+
+.btn-vermelho:hover::after {
+  opacity: 1;
+}
+
+/* Botão Power */
+.area-power {
+  margin-right: 90px;
+  margin-top: 20px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#btnPower {
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+  opacity: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#btnPower img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+#imgOn {
+  opacity: 1;
+}
+
+#imgOff {
+  opacity: 0;
+}
+
+#btnPower.apagando {
+  opacity: 0.35;
+  transform: scale(0.92);
+  filter: brightness(0.8);
+}
+
+#btnPower.aceso {
+  opacity: 1;
+  transform: scale(1);
+  filter: brightness(0.9);
+}
+
+/* --- POP-UP DE AVISO --- */
+.aviso-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  justify-content: center;
+  align-items: center;
+  z-index: 4000;
+}
+
+.aviso-content {
+  background: #1a1a1a;
+  border: 3px solid #ff4444;
+  padding: 30px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
+}
+
+.btn-ok {
+  margin-top: 20px;
+  padding: 10px 30px;
+  border: 2px solid #00aaff;
+  color: #00aaff;
+  background: none;
+  cursor: pointer;
+}
+
+/* --- POP-UP DE STATUS (CERTO/INCORRETO) --- */
+.status-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.status-content {
+  background: #121212;
+  border: 3px solid #00ff00;
+  padding: 16px 20px;
+  max-width: 360px;
+  width: min(360px, 85vw);
+  font-family: monospace;
+  box-shadow: 0 0 18px rgba(0, 255, 0, 0.25);
+}
+
+.status-titulo {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0.5px;
+}
+
+.status-mensagem {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.35;
+  color: inherit;
+  white-space: pre-wrap;
+}
+
+.status-ok {
+  border-color: #00ff00;
+  box-shadow: 0 0 18px rgba(0, 255, 0, 0.25);
+}
+
+.status-ok .status-titulo,
+.status-ok .status-mensagem {
+  color: #00ff00;
+}
+
+.status-erro {
+  border-color: #ff4444;
+  box-shadow: 0 0 18px rgba(255, 68, 68, 0.25);
+}
+
+.status-erro .status-titulo,
+.status-erro .status-mensagem {
+  color: #ff4444;
+}
+
+.botao-voltar {
+  background: none;
+  border: 2px solid #00aaff;
+  color: #00aaff;
+  padding: 10px 25px;
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s;
+  display: inline-block;
+  margin-bottom: 40px;
+}
+
+.btn-vermelho.usado {
+  opacity: 0.4;
+  filter: grayscale(40%);
+}
