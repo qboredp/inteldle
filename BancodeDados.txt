@@ -257,6 +257,8 @@ VALUES
 
 (5,'CPU',0,'o CPU não era a causa');
 
+David é legal, e tá ensinando git igual a cara dele.
+
 
 
 UPDATE usuarios
